@@ -1,13 +1,12 @@
-## Lab Title
-Bitmap
+# Bitmap Transform
 
-### Behavior
+## Behavior
 Given an file-input file-output and transform method modify the input file and save it as the out file.
 
-### Expectation
+## Expectation
 When passing an input, output, and method read the input file, modify it based on the method typed in, and write with to the specified output
 
-### Methods
+## Methods
 
 #### Grayscale Transform
 Takes in a bitmap file and converts the color to grayscale
