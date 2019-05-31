@@ -6,9 +6,9 @@ package bitmap.transformer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class AppTest {
+public class BitmapTest {
     @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
+        Bitmap classUnderTest = new Bitmap();
         assertNotNull("app should have a greeting", classUnderTest.getGreeting());
     }
 }
