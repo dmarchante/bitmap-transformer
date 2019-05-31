@@ -14,49 +14,64 @@ public class Bitmap {
     BufferedImage image;
 
     public static void main(String[] args) {
-//        File imagePath = new File("src/main/resources/image_file.bmp");
-        File imagePath = new File(args[0]);
-
+//        File imagePath = new File("src/main/resource/image_file2.bmp");
+        File inputPath = new File(args[0]);
 
         try {
-            BufferedImage image = ImageIO.read(imagePath);
+            BufferedImage image = ImageIO.read(inputPath);
             Bitmap bitmapImage = new Bitmap(image);
-
-            if (args[2] == "grayScale") {
-                BufferedImage grayscale = new BufferedImage(image.getWidth(), image.getHeight(), image.TYPE_INT_ARGB);
-
-                for(int i = 0; i < image.getWidth(); i ++){
-                    for(int j = 0; i < image.getWidth(); i ++) {
-                        Color c = new Color(image.getRGB(j, i));
-
-                        int r = c.getRed();
-                        int g = c.getGreen();
-                        int b = c.getBlue();
-                        int a = c.getAlpha();
-
-                        int gr = (r + g + b) / 3;
-
-                        Color gColor = new Color(gr, gr, gr, a);
-                        grayscale.setRGB(j, i, gColor.getRGB());
-                    }
-                }
-                bitmapImage.writeImageToFile(grayscale, args[1]);
+            if (args[2].equals("grayScale")) {
+                bitmapImage.grayscaleTransform(args[1]);
 
             }
         } catch (IOException e) {
             e. printStackTrace();
         }
-
     }
 
-//    public int[][] grayscaleTransform() {
+    public void grayscaleTransform(String outputPath) {
+        BufferedImage grayscale = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+        for(int i = 0; i < image.getWidth(); i++){
+            for(int j = 0; j < image.getHeight(); j++) {
+                Color c = new Color(image.getRGB(i,j));
+
+                int r = c.getRed();
+                int g = c.getGreen();
+                int b = c.getBlue();
+                int a = c.getAlpha();
+
+                int gr = (r + g + b) / 3;
+
+                Color gColor = new Color(gr, gr, gr, a);
+                grayscale.setRGB(i, j, gColor.getRGB());
+            }
+        }
+        this.writeImageToFile(grayscale, outputPath);
+    }
+
+//    public void horizontalFlip(String outputPath) {
+////        float cx = image.getWidth() / 2f;
+////        float cy = image.getHeight()/ 2f;
+////        BufferedImage flippedImage = image.flip(-1f, 1f, cx, cy);
 //
+//        for(int i = 0; i < image.getWidth(); i++){
+//            for(int j = 0; j < image.getHeight(); j++) {
+//            float p1 =
+//
+//                int gr = (r + g + b) / 3;
+//
+//                Color gColor = new Color(gr, gr, gr, a);
+//                grayscale.setRGB(i, j, gColor.getRGB());
+//            }
+//        }
+//        this.writeImageToFile(grayscale, outputPath);
 //    }
 
 
-    public void writeImageToFile(BufferedImage image, String output){
+    public void writeImageToFile(BufferedImage grayscale, String output){
         try {
-            ImageIO.write(image, "bmp", new File(output));
+            ImageIO.write(grayscale, "bmp", new File(output));
+            System.out.println(grayscale);
         } catch (IOException e) {
             e. printStackTrace();
         }
