@@ -23,6 +23,8 @@ public class Bitmap {
             if (args[2].equals("grayScale")) {
                 bitmapImage.grayscaleTransform(args[1]);
 
+            }else if(args[2].equals("horizontal")){
+                bitmapImage.horizontalFlip((args[1]));
             }
         } catch (IOException e) {
             e. printStackTrace();
@@ -49,23 +51,26 @@ public class Bitmap {
         this.writeImageToFile(grayscale, outputPath);
     }
 
-//    public void horizontalFlip(String outputPath) {
-////        float cx = image.getWidth() / 2f;
-////        float cy = image.getHeight()/ 2f;
-////        BufferedImage flippedImage = image.flip(-1f, 1f, cx, cy);
-//
-//        for(int i = 0; i < image.getWidth(); i++){
-//            for(int j = 0; j < image.getHeight(); j++) {
-//            float p1 =
-//
-//                int gr = (r + g + b) / 3;
-//
-//                Color gColor = new Color(gr, gr, gr, a);
-//                grayscale.setRGB(i, j, gColor.getRGB());
-//            }
-//        }
-//        this.writeImageToFile(grayscale, outputPath);
-//    }
+    public void horizontalFlip(String outputPath) {
+//        float cx = image.getWidth() / 2f;
+//        float cy = image.getHeight()/ 2f;
+//        BufferedImage flippedImage = image.flip(-1f, 1f, cx, cy);
+
+        for(int y = 0; y < image.getHeight(); y++){
+            int tempIndex = image.getWidth() - 1;
+            int x = 0;
+            while(x != tempIndex){
+                int p1 = image.getRGB(x,y);
+                int p2 = image.getRGB(tempIndex, y);
+                image.setRGB(x,y, p2);
+                image.setRGB(tempIndex,y, p1);
+                tempIndex--;
+                x++;
+            }
+
+        }
+        this.writeImageToFile(image, outputPath);
+    }
 
 
     public void writeImageToFile(BufferedImage grayscale, String output){
